@@ -160,3 +160,23 @@ function reset_controller {
     cat "./controller_id" >"$xhci_driver_path/bind"
     rm ./controller_id
 }
+
+function setup_trap_cleanup {
+    trap "
+        # Do not put double quotes anywhere in this trap, only the beginning and
+        # ending double quotes are allowed
+        # Cleanup must not be interrupted now, ignore signals that would quit
+        # the script
+        trap '' INT HUP TERM
+
+        echo 'Cleaning up and quitting...'
+        run_prompt_stop
+        restore_brightness
+        reenable_sleep
+        stop_virtualhere
+        reset_controller
+        # Reset trap to default and exit so this only runs once
+        trap - INT HUP TERM
+        trap - EXIT
+        exit 1" EXIT
+}

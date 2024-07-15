@@ -23,6 +23,7 @@ function run_as_root() {
     disable_sleep
     find_controller
     start_virtualhere
+    setup_trap_cleanup
 
     # Run - Block until Tap on screen
     run_prompt_start
@@ -37,6 +38,7 @@ function run_as_root() {
     stop_virtualhere
     reset_controller
     wait $quit_prompt_pid
+    trap - EXIT
 }
 
 source ./functions.sh

@@ -176,7 +176,10 @@ function setup_trap_cleanup {
         stop_virtualhere
         reset_controller
         # Reset trap to default and exit so this only runs once
-        trap - INT HUP TERM
-        trap - EXIT
+        trap - INT HUP TERM EXIT
         exit 1" EXIT
+}
+
+function defuse_exit_trap {
+    trap - EXIT
 }

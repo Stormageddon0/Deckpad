@@ -38,7 +38,7 @@ function run_as_root() {
     stop_virtualhere
     reset_controller
     wait $quit_prompt_pid
-    trap - EXIT
+    defuse_exit_trap
 }
 
 source ./functions.sh
@@ -51,3 +51,4 @@ FUNC=$(declare -f run_as_root)
 sudo bash -c "$FUNC; run_as_root"
 
 cd - >/dev/null
+defuse_exit_trap
